@@ -357,6 +357,25 @@ def create_withdrawal(request):
 def create_user_investment(request):
     user = request.user
     serializer = UserInvestmentSerializer(data=request.data)
+
+    # Check if user already has an active investment on this plan
+    existing_investment = UserInvestment.objects.filter(
+        user=user,
+        plan=plan,
+        is_active=True,
+        matured=False
+    ).exists()
+
+    if existing_investment:
+        return Response(
+            {
+                "detail": (
+                    "You already have an active investment on this plan. "
+                    "Please choose another plan."
+                )
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
     
     if serializer.is_valid():
         plan = serializer.validated_data['plan']
