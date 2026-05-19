@@ -367,8 +367,6 @@ def create_user_investment(request):
         existing_investment = UserInvestment.objects.filter(
             user=user,
             plan=plan,
-            is_active=True,
-            matured=False
         ).exists()
 
         if existing_investment:
