@@ -373,7 +373,7 @@ def create_user_investment(request):
             return Response(
                 {
                     "detail": (
-                        "You already have an active investment on this plan. "
+                        "You already have completed investment on this plan. "
                         "Please choose another plan."
                     )
                 },
